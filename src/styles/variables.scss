@@ -22,7 +22,7 @@ $card-box-shadow-dark: 0px 3px 20px rgba(5, 5, 5, 0.28);
   //body-background
   --body-background-dark: #{$body-background-dark};
   --body-background-lite: #{$body-background-lite};
-  --body-background-default: var(#{--body-background-light});
+  --body-background-default: var(#{--body-background-lite});
 
   //components-background
   --components-background-dark: #{$components-background-dark};
