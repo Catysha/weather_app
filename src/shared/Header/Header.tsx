@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import s from "./Header.module.scss";
 import Select from 'react-select'
 import {GlobalSvgSelector} from "../../assets/icons/global/GlobalSvgSelector";
@@ -12,12 +12,14 @@ export const Header = (props: Props) => {
         { value: 'city-1', label: 'Минск' },
         { value: 'city-2', label: 'Кобрин' },
         { value: 'city-3', label: 'Брест' }
-    ]
+    ];
+
+    const [theme, setTheme] =useState('lite');
 
     const colorStyles = {
         control: (styles: any) => ({
             ...styles,
-            backgroundColor: 0 ? '#4F4F4F' : 'rgba(71, 147, 255, 0.2)',
+            backgroundColor: theme==='dark' ? '#4F4F4F' : 'rgba(71, 147, 255, 0.2)',
             width: '194px',
             height: '37px',
             border: 'none',
@@ -26,9 +28,31 @@ export const Header = (props: Props) => {
         }),
         singleValue: (styles: any) => ({
             ...styles,
-            color: 0 ? '#fff' : '#000',
+            color: theme==='dark' ? '#fff' : '#000',
         })
     }
+
+    function changeTheme(){
+        setTheme(theme === 'lite' ? 'dark' : 'lite');
+        const root = document.querySelector(':root') as HTMLElement;
+        root.style.setProperty('--body-background-default',  `var(--body-background-${theme})`);
+    }
+
+    useEffect(() => {
+        const root = document.querySelector(':root') as HTMLElement;
+        const components= [
+            'body-background',
+            'components-background',
+            'card-background',
+            'card-shadow',
+            'text-color'
+        ];
+        components.forEach((component) => {
+            root.style.setProperty(`--${component}-default`,
+                `var(--${component}-${theme})`);
+        });
+    }, [theme]);
+
 
     return (<header className={s.header}>
         <div className={s.wrapper}>
@@ -36,7 +60,9 @@ export const Header = (props: Props) => {
             <div className={s.title}>Weather</div>
         </div>
         <div className={s.wrapper}>
-            <div className={s.change_theme}><GlobalSvgSelector id="change-theme"/></div>
+            <div className={s.change_theme} onClick={changeTheme}>
+                <GlobalSvgSelector id="change-theme"/>
+            </div>
             <Select
                 defaultValue={options[0]}
                 styles={colorStyles}
