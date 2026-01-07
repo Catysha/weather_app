@@ -2,24 +2,24 @@ import React, {useEffect, useState} from "react";
 import s from "./Header.module.scss";
 import Select from 'react-select'
 import {GlobalSvgSelector} from "../../assets/icons/global/GlobalSvgSelector";
+import {useTheme} from "../../hooks/useTheme";
 
 interface Props {
 
 }
 
 export const Header = (props: Props) => {
+    const theme = useTheme();
     const options = [
         { value: 'city-1', label: 'Минск' },
         { value: 'city-2', label: 'Кобрин' },
         { value: 'city-3', label: 'Брест' }
     ];
 
-    const [theme, setTheme] =useState('lite');
-
     const colorStyles = {
         control: (styles: any) => ({
             ...styles,
-            backgroundColor: theme==='dark' ? '#4F4F4F' : 'rgba(71, 147, 255, 0.2)',
+            backgroundColor: theme.theme ==='dark' ? '#4F4F4F' : 'rgba(71, 147, 255, 0.2)',
             width: '194px',
             height: '37px',
             border: 'none',
@@ -28,14 +28,12 @@ export const Header = (props: Props) => {
         }),
         singleValue: (styles: any) => ({
             ...styles,
-            color: theme==='dark' ? '#fff' : '#000',
+            color: theme.theme ==='dark' ? '#fff' : '#000',
         })
     }
 
     function changeTheme(){
-        setTheme(theme === 'lite' ? 'dark' : 'lite');
-        const root = document.querySelector(':root') as HTMLElement;
-        root.style.setProperty('--body-background-default',  `var(--body-background-${theme})`);
+        theme.changeTheme(theme.theme === 'lite' ? 'dark' : 'lite')
     }
 
     useEffect(() => {
@@ -49,9 +47,9 @@ export const Header = (props: Props) => {
         ];
         components.forEach((component) => {
             root.style.setProperty(`--${component}-default`,
-                `var(--${component}-${theme})`);
+                `var(--${component}-${theme.theme})`);
         });
-    }, [theme]);
+    }, [theme.theme]);
 
 
     return (<header className={s.header}>
