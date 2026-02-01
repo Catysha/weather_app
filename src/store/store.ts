@@ -1,5 +1,8 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-const rootReducer = combineReducers({});
+import currentWeatherSliceReducer from "./slices/currentWeatherSlice";
+const rootReducer = combineReducers({
+    currentWeatherSliceReducer
+});
 
 export const store = configureStore({
     reducer: rootReducer,
