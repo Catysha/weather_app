@@ -18,10 +18,10 @@ export const ThisDay = ({weather}: Props) => {
         </div>
         <div className={s.bottom__block}>
             <div className={s.this__time}>
-                Время: <span>21:54</span>
+                Время: <span>{weather.dt}</span>
             </div>
             <div className={s.this__city}>
-                Город: <span>Минск</span>
+                Город: <span>{weather.name}</span>
             </div>
         </div>
     </div>)
