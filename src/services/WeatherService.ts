@@ -1,4 +1,4 @@
-import axios , {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import {Weather} from "../store/types/types";
 import api from "../axios";
 
