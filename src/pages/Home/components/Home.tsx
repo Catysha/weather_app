@@ -14,7 +14,7 @@ export const Home = () => {
 
 
     useEffect(() => {
-        dispatch(fetchCurrentWeather('madrid'))
+        dispatch(fetchCurrentWeather('brest'))
     }, [dispatch])
     return (<div className={s.home}>
         <div className={s.wrapper}>

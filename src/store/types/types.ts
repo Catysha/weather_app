@@ -5,10 +5,13 @@ export type Weather = {
         pressure: number;
     };
     dt: number;
+    timezone: number;
     name: string;
     wind: {
         speed: number;
         deg: number;
-    }
-
+    };
+    weather: {
+        id: number,
+    }[]
 };

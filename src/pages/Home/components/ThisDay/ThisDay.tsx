@@ -2,12 +2,14 @@ import React from "react";
 import s from "./ThisDay.module.scss";
 import {GlobalSvgSelector} from "../../../../assets/icons/global/GlobalSvgSelector";
 import {Weather} from "../../../../store/types/types";
+import { useCityTime } from "../../../../hooks/useCityTime";
 
 interface Props {
     weather: Weather;
 }
 
 export const ThisDay = ({weather}: Props) => {
+    const time = useCityTime(weather.timezone);
     return (<div className={s.this__day}>
         <div className={s.top__block}>
             <div className={s.top__block__wrapper}>
@@ -18,7 +20,7 @@ export const ThisDay = ({weather}: Props) => {
         </div>
         <div className={s.bottom__block}>
             <div className={s.this__time}>
-                Время: <span>{weather.dt}</span>
+                Время: <span>{time}</span>
             </div>
             <div className={s.this__city}>
                 Город: <span>{weather.name}</span>

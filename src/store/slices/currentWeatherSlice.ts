@@ -21,12 +21,17 @@ const initialState: CurrentWeather = {
             pressure: 0,
         },
         dt: 0,
+        timezone: 0,
         name: " ",
         wind: {
             speed: 0,
             deg: 0,
-        }
-
+        },
+        weather: [
+            {
+                id: 0,
+            }
+        ]
     },
     isLoading: false,
     response: {

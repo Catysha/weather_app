@@ -3,6 +3,13 @@ import s from "./ThisDayInfo.module.scss";
 import cloud from '../../../../assets/images/Cloud image.png';
 import {ThisDayItem} from "./ThisDayItem";
 import {Weather} from "../../../../store/types/types";
+import {
+    getPrecipitationByWeatherId,
+    getPressureCategory,
+    getWindDirection,
+    getWindSpeedCategory,
+    pressureToMmHg
+} from "../../../../utils/helpers/weatherHelpers";
 interface Props {
     weather: Weather;
 }
@@ -24,17 +31,17 @@ export const ThisDayInfo = ({weather}: Props) => {
         {
             icon_id: 'pressure',
             name: 'Давление',
-            value: `${weather.main.pressure} мм ртутного столба - нормальное`,
+            value: `${pressureToMmHg(weather.main.pressure)} мм ртутного столба - ${getPressureCategory(weather.main.pressure)}`,
         },
         {
             icon_id: 'precipitation',
             name: 'Осадки',
-            value: 'Без осадков',
+            value: `${getPrecipitationByWeatherId(weather.weather[0].id)}`,
         },
         {
             icon_id: 'wind',
             name: 'Ветер',
-            value: `${Math.floor(weather.wind.speed)} м/с юго-запад - легкий ветер`,
+            value: `${Math.floor(weather.wind.speed)} м/с ${getWindDirection(weather.wind.deg)} - ${getWindSpeedCategory(weather.wind.speed)}`,
         },
     ];
     return (<div className={s.this__day__info}>
