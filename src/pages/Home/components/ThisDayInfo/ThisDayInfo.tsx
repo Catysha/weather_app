@@ -21,27 +21,28 @@ interface Props {
 }
 
 export const ThisDayInfo = ({weather}: Props) => {
+    const {current} = weather;
     const items = [
         {
             icon_id: 'temp',
             name: 'Температура',
-            value: `${Math.floor(weather.main.temp)}° - ощущается как ${Math.floor(weather.main.feels_like)}°`,
+            value: `${Math.floor(current.temperature_2m)}° - ощущается как ${Math.floor(current.apparent_temperature)}°`,
 
         },
         {
             icon_id: 'pressure',
             name: 'Давление',
-            value: `${pressureToMmHg(weather.main.pressure)} мм ртутного столба - ${getPressureCategory(weather.main.pressure)}`,
+            value: `${pressureToMmHg(current.surface_pressure)} мм ртутного столба - ${getPressureCategory(current.surface_pressure)}`,
         },
         {
             icon_id: 'precipitation',
             name: 'Осадки',
-            value: `${getPrecipitationByWeatherId(weather.weather[0].id)}`,
+            value: `${getPrecipitationByWeatherId(current.weather_code)}`,
         },
         {
             icon_id: 'wind',
             name: 'Ветер',
-            value: `${Math.floor(weather.wind.speed)} м/с ${getWindDirection(weather.wind.deg)} - ${getWindSpeedCategory(weather.wind.speed)}`,
+            value: `${Math.floor(current.wind_speed_10m)} м/с ${getWindDirection(current.wind_direction_10m)} - ${getWindSpeedCategory(current.wind_speed_10m)}`,
         },
     ];
     return (<div className={s.this__day__info}>

@@ -9,11 +9,11 @@ interface Props {
 }
 
 export const ThisDay = ({weather}: Props) => {
-    const time = useCityTime(weather.timezone);
+     const time = useCityTime(weather.timezone);
     return (<div className={s.this__day}>
         <div className={s.top__block}>
             <div className={s.top__block__wrapper}>
-                <div className={s.this__temp}>{Math.floor(weather.main.temp)}°</div>
+                <div className={s.this__temp}>{Math.floor(weather.current.temperature_2m)}°</div>
                 <div className={s.this__day__name}>Сегодня</div>
             </div>
             <GlobalSvgSelector id="sun"/>
@@ -23,7 +23,7 @@ export const ThisDay = ({weather}: Props) => {
                 Время: <span>{time}</span>
             </div>
             <div className={s.this__city}>
-                Город: <span>{weather.name}</span>
+                Город: <span>{weather.city}</span>
             </div>
         </div>
     </div>)

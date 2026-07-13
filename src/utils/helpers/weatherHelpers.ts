@@ -1,4 +1,4 @@
-import {presipitationById, pressureCategories, windDirections, windSpeedCategories} from "../constants/constants";
+import {precipitationByWeatherCode, pressureCategories, windDirections, windSpeedCategories} from "../constants/constants";
 
 export function pressureToMmHg(pressure: number): number {
     return Math.round(pressure * 0.75006);
@@ -12,9 +12,9 @@ export function getPressureCategory(pressure: number): string {
     return category?.label ?? "Неизвестно";
 }
 
-export function getPrecipitationByWeatherId(id: number): string {
-    const category = presipitationById.find(
-        ({ range }) => id >= range[0] && id <= range[1]
+export function getPrecipitationByWeatherId(code: number): string {
+    const category = precipitationByWeatherCode.find(
+        ({ codes }) => (codes as readonly number[]).includes(code)
     );
 
     return category?.label ?? "Без осадков";

@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Weather} from "../types/types";
-import {AxiosResponse} from "axios";
 
 type CurrentWeather = {
     weather: Weather,
@@ -15,23 +14,19 @@ type Response = {
 
 const initialState: CurrentWeather = {
     weather: {
-        main: {
-            temp: 0,
-            feels_like: 0,
-            pressure: 0,
+        latitude: 0,
+        longitude: 0,
+        timezone: "",
+        city: "",
+        current: {
+            temperature_2m: 0,
+            apparent_temperature: 0,
+            wind_speed_10m: 0,
+            wind_direction_10m: 0,
+            surface_pressure: 0,
+            weather_code: 0,
+            relative_humidity_2m: 0,
         },
-        dt: 0,
-        timezone: 0,
-        name: " ",
-        wind: {
-            speed: 0,
-            deg: 0,
-        },
-        weather: [
-            {
-                id: 0,
-            }
-        ]
     },
     isLoading: false,
     response: {
@@ -49,24 +44,21 @@ export const currentWeatherSlice = createSlice({
         },
         fetchCurrentWeatherSuccess(
             state,
-            action: PayloadAction<AxiosResponse<Weather>>
+            action: PayloadAction<Weather>
         ) {
             state.isLoading = false;
-            state.weather = action.payload.data;
+            state.weather = action.payload;
             state.response = {
-                status: action.payload.status,
-                message: action.payload.statusText,
+                status: 200,
+                message: 'OK',
             };
         },
         fetchCurrentWeatherError(
             state,
-            action: PayloadAction<AxiosResponse<Weather>>
+            action: PayloadAction<Response>
         ) {
             state.isLoading = false;
-            state.response = {
-                status: action.payload.status,
-                message: action.payload.statusText,
-            };
+            state.response = action.payload;
         },
     }
 })

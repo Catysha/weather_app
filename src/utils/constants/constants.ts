@@ -10,12 +10,14 @@ export const pressureCategories: ReadonlyArray<PressureCategory> = [
     { min: 1031, max: Infinity, label: "высокое" },
 ] as const;
 
-export const presipitationById = [
-    { range: [200, 232], label: "Гроза" },
-    { range: [300, 321], label: "Морось" },
-    { range: [500, 531], label: "Дождь" },
-    { range: [600, 622], label: "Снег" },
-    { range: [700, 781], label: "Туман" },
+export const precipitationByWeatherCode = [
+    { codes: [0, 1], label: "Ясно" },
+    { codes: [2, 3], label: "Облачно" },
+    { codes: [45, 48], label: "Туман" },
+    { codes: [51, 53, 55, 56, 57], label: "Морось" },
+    { codes: [61, 63, 65, 66, 67, 80, 81, 82], label: "Дождь" },
+    { codes: [71, 73, 75, 77, 85, 86], label: "Снег" },
+    { codes: [95, 96, 99], label: "Гроза" },
 ] as const;
 
 export const windDirections = [

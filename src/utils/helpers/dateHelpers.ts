@@ -1,10 +1,17 @@
-export function getLocalCityTime(timezone: number): string {
-    const now = Date.now();
-    const localTime = new Date(now + timezone * 1000);
+export function getLocalCityTime(timezone: string): string {
+    if (!timezone) {
+        return "";
+    }
 
-    const hours = localTime.getUTCHours().toString().padStart(2, "0");
-    const minutes = localTime.getUTCMinutes().toString().padStart(2, "0");
-
-    return `${hours}:${minutes}`;
+    try {
+        return new Intl.DateTimeFormat("ru-RU", {
+            timeZone: timezone,
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+        }).format(new Date());
+    } catch {
+        return "";
+    }
 }
 

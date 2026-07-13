@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {getLocalCityTime} from "../utils/helpers/dateHelpers";
 
-export function useCityTime(timezone: number): string {
+export function useCityTime(timezone: string): string {
     const [time, setTime] = useState(() =>
         getLocalCityTime(timezone)
     );
