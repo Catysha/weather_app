@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "./Days.module.scss";
-import {Card} from "./Card";
-import {Tabs} from "./Tabs";
+import { Card } from "./Card";
+import { Tabs } from "./Tabs";
+import { Popup } from "../../../../shared/Popup/Popup";
+import { useCustomSelector } from "../../../../hooks/store";
+import { getWeatherIcon } from "../../../../utils/helpers/weatherHelpers";
 
-interface Props {
-
-}
+interface Props { }
 
 export interface Day {
     day: string;
@@ -17,72 +18,73 @@ export interface Day {
 }
 
 export const Days = (props: Props) => {
-    const days: Day[] = [
-        {
-            day: 'Сегодня',
-            day_info: '28 авг',
-            icon_id: 'sun',
-            temp_day: '+18',
-            temp_night: '+15',
-            info: 'Облачно',
-        },
-        {
-            day: 'Завтра',
-            day_info: '29 авг',
-            icon_id: 'small_rain_sun',
-            temp_day: '+18',
-            temp_night: '+15',
-            info: 'Небольшой дождь и солнце',
-        },
-        {
-            day: 'Ср',
-            day_info: '30 авг',
-            icon_id: 'small_rain',
-            temp_day: '+18',
-            temp_night: '+15',
-            info: 'Небольшой дождь',
-        },
-        {
-            day: 'Чт',
-            day_info: '28 авг',
-            icon_id: 'mainly_cloudy',
-            temp_day: '+18',
-            temp_night: '+15',
-            info: 'Облачно',
-        },
-        {
-            day: 'Пт',
-            day_info: '28 авг',
-            icon_id: 'rain',
-            temp_day: '+18',
-            temp_night: '+15',
-            info: 'Облачно',
-        },
-        {
-            day: 'Сб',
-            day_info: '28 авг',
-            icon_id: 'sun',
-            temp_day: '+18',
-            temp_night: '+15',
-            info: 'Облачно',
-        },
-        {
-            day: 'Вс',
-            day_info: '28 авг',
-            icon_id: 'sun',
-            temp_day: '+18',
-            temp_night: '+15',
-            info: 'Облачно',
-        },
-    ];
+    const [daysCount, setDaysCount] = useState(7);
+    const [selectedDay, setSelectedDay] = useState<Day | null>(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const { forecast, isLoading } = useCustomSelector(
+        (state) => state.forecastWeatherSliceReducer
+    );
+
+    const parseForecastData = (): Day[] => {
+        if (!forecast?.daily) return [];
+
+        const dayNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+        const monthNames = [
+            "янв", "фев", "мар", "апр", "май", "июн",
+            "июл", "авг", "сен", "окт", "ноя", "дек",
+        ];
+
+        return forecast.daily.time.map((dateStr: string, index: number) => {
+            const date = new Date(dateStr);
+            const dayName =
+                index === 0
+                    ? "Сегодня"
+                    : index === 1
+                        ? "Завтра"
+                        : dayNames[date.getDay()];
+
+            return {
+                day: dayName,
+                day_info: `${date.getDate()} ${monthNames[date.getMonth()]}`,
+                icon_id: getWeatherIcon(forecast.daily.weather_code[index]),
+                temp_day: `${Math.round(forecast.daily.temperature_2m_max[index])}°`,
+                temp_night: `${Math.round(forecast.daily.temperature_2m_min[index])}°`,
+                info: `Ветер ${Math.round(forecast.daily.wind_speed_10m_max[index])} м/с`,
+            };
+        });
+    };
+
+    const handleCardClick = (day: Day) => {
+        setSelectedDay(day);
+        setIsPopupOpen(true);
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupOpen(false);
+        setSelectedDay(null);
+    };
+
+    const days = parseForecastData();
+    const filteredDays = days.slice(0, daysCount);
+
+    if (isLoading) {
+        return <div style={{ padding: "20px" }}>Загрузка прогноза...</div>;
+    }
+
     return (
         <>
-            <Tabs/>
+            <Tabs daysCount={daysCount} setDaysCount={setDaysCount} />
             <div className={s.days}>
-                {days.map((day: Day) => (
-                    <Card day={day} key = {day.day}/>
+                {filteredDays.map((day: Day) => (
+                    <Card
+                        day={day}
+                        key={day.day + day.day_info}
+                        onClick={() => handleCardClick(day)}
+                    />
                 ))}
             </div>
+            <Popup day={selectedDay} isOpen={isPopupOpen} onClose={handleClosePopup} />
         </>
-    )
-}
+    );
+};

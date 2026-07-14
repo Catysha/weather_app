@@ -44,3 +44,22 @@ export const windSpeedCategories = [
     { min: 24.5, max: 28.4, name: 'сильный шторм' },
     { min: 28.5, max: Infinity, name: 'ураган' }
 ];
+
+export const cities = [
+    { value: 'Minsk', label: 'Минск' },
+    { value: 'Kobrin', label: 'Кобрин' },
+    { value: 'Brest', label: 'Брест' },
+    { value: 'Grodno', label: 'Гродно' },
+    { value: 'Vitebsk', label: 'Витебск' },
+    { value: 'Mogilev', label: 'Могилёв' },
+    { value: 'Gomel', label: 'Гомель' },
+    { value: 'Pinsk', label: 'Пинск' },
+    { value: 'Moscow', label: 'Москва' },
+    { value: 'Saint Petersburg', label: 'Санкт-Петербург' },
+    { value: 'Paris', label: 'Париж' },
+    { value: 'London', label: 'Лондон' },
+    { value: 'Berlin', label: 'Берлин' },
+    { value: 'New York', label: 'Нью-Йорк' },
+    { value: 'Tokyo', label: 'Токио' },
+    { value: 'Sydney', label: 'Сидней' },
+];

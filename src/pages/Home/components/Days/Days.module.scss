@@ -1,63 +1,67 @@
 @import "../../../../styles/variables.scss";
-.days{
+
+.days {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  gap: 15px;
   padding: 20px;
   width: 100%;
   background: var(#{--components-background-default});
   box-shadow: $box-shadow;
   border-radius: 0 0 $border-radius $border-radius;
+  transition: all 0.5s ease;
 }
 
-.card{
+.card {
   display: flex;
   flex-direction: column;
   background: var(#{--card-background-default});
   border-radius: 10px;
   padding: 10px;
   width: 149px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
   cursor: pointer;
-  .day{
+
+  .day {
     margin-bottom: 7px;
     font-size: 18px;
     color: var(#{--text-color-default});
-
   }
 
-  .day__info{
+  .day__info {
     font-size: 14px;
     margin-bottom: 12px;
     color: $base-color;
   }
 
-  .img{
+  .img {
     margin-bottom: 12px;
   }
 
-  .temp__day{
+  .temp__day {
     font-size: 18px;
     color: var(#{--text-color-default});
   }
 
-  .temp__night{
+  .temp__night {
     font-size: 13px;
     color: $base-color;
     margin-bottom: 6px;
   }
 
-  .info{
+  .info {
     font-size: 13px;
     color: $base-color;
   }
 
-  &:hover{
+  &:hover {
     box-shadow: 0 3px 20px var(#{--card-shadow-default});
+    transform: translateY(-5px);
   }
 }
 
-.tabs{
+.tabs {
   display: flex;
   justify-content: space-between;
   margin-bottom: 7px;
@@ -75,19 +79,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.cancel{
+.cancel {
   margin-right: 0;
 }
 
-.tab{
-  &.active{
+.tab {
+  &.active {
     background: $primary-color;
     color: #fff;
   }
+
+  &:hover:not(.active) {
+    opacity: 0.8;
+  }
 }
 
-.tabs__wrapper{
+.tabs__wrapper {
   display: flex;
 }
