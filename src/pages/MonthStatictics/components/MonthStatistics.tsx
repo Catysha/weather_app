@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import s from "./MonthStatistics.module.scss";
 import { ChooseMonth } from "./ChooseMonth/ChooseMonth";
 import {TemperatureStatistics} from "./TemperatureStatistics/TemperatureStatistics";
+import {TemperatureDays} from "./DaysStatistics/TemperatureDays";
 
 interface Props { }
 
@@ -14,6 +15,7 @@ export const MonthStatistics = (props: Props) => {
                 <ChooseMonth selectedMonth={selectedMonth} onMonthChange={setSelectedMonth} />
                 <TemperatureStatistics />
             </div>
+            <TemperatureDays />
         </div>
     );
 };
