@@ -8,12 +8,15 @@ import { useCustomDispatch } from "../../hooks/store";
 import { fetchCurrentWeather } from "../../store/thunks/fetchCurrentWeather";
 import { fetchForecastWeather } from "../../store/thunks/fetchForecastWeather";
 import { cities } from "../../utils/constants/constants";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface Props { }
 
 export const Header = (props: Props) => {
     const theme = useTheme();
     const dispatch = useCustomDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const options = cities;
     const [selectedCity, setSelectedCity] = useState(cities[0]);
@@ -66,6 +69,20 @@ export const Header = (props: Props) => {
             <div className={s.wrapper}>
                 <div className={s.logo}><GlobalSvgSelector id="header-logo" /></div>
                 <div className={s.title}>Weather</div>
+                <nav className={s.nav}>
+                    <a
+                        href="/"
+                        className={`${s.navLink} ${location.pathname === '/' ? s.active : ''}`}
+                    >
+                        Сегодня
+                    </a>
+                    <a
+                        href="/month-statictics"
+                        className={`${s.navLink} ${location.pathname === '/month-statictics' ? s.active : ''}`}
+                    >
+                        Статистика
+                    </a>
+                </nav>
             </div>
             <div className={s.wrapper}>
                 <div className={s.change_theme} onClick={changeTheme}>
