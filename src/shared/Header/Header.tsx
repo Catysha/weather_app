@@ -8,14 +8,13 @@ import { useCustomDispatch } from "../../hooks/store";
 import { fetchCurrentWeather } from "../../store/thunks/fetchCurrentWeather";
 import { fetchForecastWeather } from "../../store/thunks/fetchForecastWeather";
 import { cities } from "../../utils/constants/constants";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 
 interface Props { }
 
 export const Header = (props: Props) => {
     const theme = useTheme();
     const dispatch = useCustomDispatch();
-    const navigate = useNavigate();
     const location = useLocation();
 
     const options = cities;

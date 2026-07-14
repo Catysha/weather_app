@@ -1,0 +1,36 @@
+@import '../../../../styles/variables.scss';
+
+.statsContainer {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  background: var(#{--components-background-default});
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  text-align: center;
+
+  .statLabel {
+    font-size: 14px;
+    color: var(#{--text-color-default});
+    margin-bottom: 10px;
+  }
+
+  .statValue {
+    font-size: 32px;
+    font-weight: bold;
+    color: $primary-color;
+  }
+
+  .statUnit {
+    font-size: 14px;
+    color: var(#{--text-color-default});
+    margin-top: 5px;
+  }
+}
