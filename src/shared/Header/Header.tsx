@@ -52,8 +52,8 @@ export const Header = (props: Props) => {
     const handleCityChange = (option: any) => {
         if (option) {
             setSelectedCity(option);
-            dispatch(fetchCurrentWeather(option.value));
-            dispatch(fetchForecastWeather(option.value, 14));
+            dispatch(fetchCurrentWeather(option.value, option.country));
+            dispatch(fetchForecastWeather(option.value, 14, option.country));
         }
     };
 

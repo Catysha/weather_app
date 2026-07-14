@@ -4,27 +4,27 @@ import { weatherService } from "../../services/WeatherService";
 import { forecastWeatherSlice } from "../slices/forecastWeatherSlice";
 
 export const fetchForecastWeather =
-    (payload: string, days: number = 14) => async (dispatch: AppDispatch) => {
+    (city: string, days?: number, country?: string) => async (dispatch: AppDispatch) => {
         try {
             dispatch(forecastWeatherSlice.actions.fetchForecastWeather());
 
-            const city = await GeocodingService.getCity(payload);
+            const cityData = await GeocodingService.getCity(city, country);
 
-            if (!city) {
-                throw new Error("Город не найден");
+            if (!cityData) {
+                throw new Error(`Город "${city}" не найден`);
             }
 
             const forecast = await weatherService.getForecastWeather(
-                city.latitude,
-                city.longitude,
-                days
+                cityData.latitude,
+                cityData.longitude,
+                days || 14
             );
 
             dispatch(
                 forecastWeatherSlice.actions.fetchForecastWeatherSuccess(forecast)
             );
         } catch (error) {
-            console.error(error);
+            console.error("Ошибка загрузки прогноза:", error);
             dispatch(
                 forecastWeatherSlice.actions.fetchForecastWeatherError({
                     status: 0,

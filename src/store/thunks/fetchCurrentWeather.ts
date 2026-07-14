@@ -4,27 +4,28 @@ import { weatherService } from "../../services/WeatherService";
 import { currentWeatherSlice } from "../slices/currentWeatherSlice";
 
 export const fetchCurrentWeather =
-    (payload: string) => async (dispatch: AppDispatch) => {
+    (city: string, country?: string) => async (dispatch: AppDispatch) => {
         try {
             dispatch(currentWeatherSlice.actions.fetchCurrentWeather());
 
-            const city = await GeocodingService.getCity(payload);
+            const cityData = await GeocodingService.getCity(city, country);
 
-            if (!city) {
-                throw new Error("Город не найден");
+            if (!cityData) {
+                throw new Error(`Город "${city}" не найден`);
             }
 
             const weather = await weatherService.getCurrentWeather(
-                city.latitude,
-                city.longitude
+                cityData.latitude,
+                cityData.longitude
             );
-            weather.city = city.name;
+            weather.city = cityData.name;
+            weather.timezone = cityData.timezone;
 
             dispatch(
                 currentWeatherSlice.actions.fetchCurrentWeatherSuccess(weather)
             );
         } catch (error) {
-            console.error(error);
+            console.error("Ошибка загрузки текущей погоды:", error);
             dispatch(
                 currentWeatherSlice.actions.fetchCurrentWeatherError({
                     status: 0,
