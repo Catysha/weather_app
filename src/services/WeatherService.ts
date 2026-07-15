@@ -51,4 +51,36 @@ export const weatherService = {
 
         return response.data;
     },
+
+    async getMonthStatistics(
+        latitude: number,
+        longitude: number,
+        startDate: string,
+        endDate: string
+    ) {
+        const response = await axios.get(
+            "https://archive-api.open-meteo.com/v1/archive",
+            {
+                params: {
+                    latitude,
+                    longitude,
+
+                    daily: [
+                        "weather_code",
+                        "temperature_2m_max",
+                        "temperature_2m_min",
+                        "temperature_2m_mean",
+                    ],
+
+                    start_date: startDate,
+
+                    end_date: endDate,
+
+                    timezone: "auto",
+                },
+            }
+        );
+
+        return response.data;
+    }
 };

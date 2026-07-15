@@ -70,17 +70,41 @@ export const ChooseMonth = ({ selectedMonth, onMonthChange }: Props) => {
             <div className={s.title}>Статистика погоды</div>
             <div className={s.monthSelector}>
                 <Select
-                    value={months.find(m => m.value === month)}
+                    value={months.find(
+                        (m) => m.value === month
+                    )}
                     options={months}
                     styles={colorStyles}
                     isSearchable={false}
+                    onChange={(option) => {
+                        if (!option) return;
+
+                        onMonthChange(
+                            `${year}-${String(option.value).padStart(
+                                2,
+                                "0"
+                            )}`
+                        );
+                    }}
                 />
 
                 <Select
-                    value={years.find(y => y.value === year)}
+                    value={years.find(
+                        (y) => y.value === year
+                    )}
                     options={years}
                     styles={colorStyles}
                     isSearchable={false}
+                    onChange={(option) => {
+                        if (!option) return;
+
+                        onMonthChange(
+                            `${option.value}-${String(month).padStart(
+                                2,
+                                "0"
+                            )}`
+                        );
+                    }}
                 />
             </div>
         </div>

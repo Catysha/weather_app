@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import s from "./Header.module.scss";
 import Select from 'react-select'
 import { GlobalSvgSelector } from "../../assets/icons/global/GlobalSvgSelector";
@@ -9,6 +8,11 @@ import { fetchCurrentWeather } from "../../store/thunks/fetchCurrentWeather";
 import { fetchForecastWeather } from "../../store/thunks/fetchForecastWeather";
 import { cities } from "../../utils/constants/constants";
 import { useLocation} from "react-router-dom";
+import { selectedCitySlice } from "../../store/slices/selectedCitySlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { Link } from "react-router-dom";
+
 
 interface Props { }
 
@@ -18,8 +22,14 @@ export const Header = (props: Props) => {
     const location = useLocation();
 
     const options = cities;
-    const [selectedCity, setSelectedCity] = useState(cities[0]);
+    const selectedCityName = useSelector(
+        (state: RootState) => state.selectedCitySliceReducer.city
+    );
 
+    const selectedCity =
+        cities.find(
+            (city) => city.value === selectedCityName
+        ) || cities[0];
     const colorStyles = {
         control: (styles: any) => ({
             ...styles,
@@ -53,9 +63,26 @@ export const Header = (props: Props) => {
 
     const handleCityChange = (option: any) => {
         if (option) {
-            setSelectedCity(option);
-            dispatch(fetchCurrentWeather(option.value, option.country));
-            dispatch(fetchForecastWeather(option.value, 14, option.country));
+            dispatch(
+                selectedCitySlice.actions.setSelectedCity(
+                    option.value
+                )
+            );
+
+            dispatch(
+                fetchCurrentWeather(
+                    option.value,
+                    option.country
+                )
+            );
+
+            dispatch(
+                fetchForecastWeather(
+                    option.value,
+                    14,
+                    option.country
+                )
+            );
         }
     };
 
@@ -69,18 +96,19 @@ export const Header = (props: Props) => {
                 <div className={s.logo}><GlobalSvgSelector id="header-logo" /></div>
                 <div className={s.title}>Weather</div>
                 <nav className={s.nav}>
-                    <a
-                        href="/"
-                        className={`${s.navLink} ${location.pathname === '/' ? s.active : ''}`}
+                    <Link
+                        to="/"
+                        className={`${s.navLink} ${location.pathname === "/" ? s.active : ""}`}
                     >
                         Сегодня
-                    </a>
-                    <a
-                        href="/month-statictics"
-                        className={`${s.navLink} ${location.pathname === '/month-statictics' ? s.active : ''}`}
+                    </Link>
+
+                    <Link
+                        to="/month-statictics"
+                        className={`${s.navLink} ${location.pathname === "/month-statictics" ? s.active : ""}`}
                     >
                         Статистика
-                    </a>
+                    </Link>
                 </nav>
             </div>
             <div className={s.wrapper}>
