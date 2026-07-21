@@ -4,8 +4,10 @@ type SelectedCity = {
     city: string;
 };
 
+const savedCity = localStorage.getItem("selectedCity");
+
 const initialState: SelectedCity = {
-    city: "Minsk",
+    city: savedCity || "Minsk",
 };
 
 export const selectedCitySlice = createSlice({
@@ -14,8 +16,15 @@ export const selectedCitySlice = createSlice({
     reducers: {
         setSelectedCity(state, action: PayloadAction<string>) {
             state.city = action.payload;
+
+            localStorage.setItem(
+                "selectedCity",
+                action.payload
+            );
         },
     },
 });
+
+export const { setSelectedCity } = selectedCitySlice.actions;
 
 export default selectedCitySlice.reducer;

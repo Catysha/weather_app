@@ -41,7 +41,7 @@ export const DayCard = ({day, date, temp_max, temp_min, temp_avg, weather_code, 
 
     const dayName = dayNames[dateObj.getDay()];
     const monthName = monthNames[dateObj.getMonth()];
-
+    console.log(weather_code, icon_id);
     return (
         <div className={s.card}>
             <div className={s.day}>{dayName}</div>

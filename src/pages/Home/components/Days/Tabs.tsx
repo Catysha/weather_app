@@ -36,13 +36,6 @@ export const Tabs = ({ daysCount, setDaysCount }: Props) => {
                     </div>
                 ))}
             </div>
-            <div
-                className={s.cancel}
-                onClick={() => setDaysCount(7)}
-                style={{ cursor: 'pointer' }}
-            >
-                Отменить
-            </div>
         </div>
     );
 };

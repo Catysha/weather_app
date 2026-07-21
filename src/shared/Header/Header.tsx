@@ -63,26 +63,16 @@ export const Header = (props: Props) => {
 
     const handleCityChange = (option: any) => {
         if (option) {
+            localStorage.setItem("selectedCity", option.value);
+
             dispatch(
                 selectedCitySlice.actions.setSelectedCity(
                     option.value
                 )
             );
 
-            dispatch(
-                fetchCurrentWeather(
-                    option.value,
-                    option.country
-                )
-            );
-
-            dispatch(
-                fetchForecastWeather(
-                    option.value,
-                    14,
-                    option.country
-                )
-            );
+            dispatch(fetchCurrentWeather(option.value));
+            dispatch(fetchForecastWeather(option.value));
         }
     };
 
